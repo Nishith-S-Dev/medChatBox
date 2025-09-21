@@ -159,10 +159,8 @@ iface = gr.Interface(
 # Local vs Railway distinction
 # -------------------------------
 if os.environ.get("RAILWAY_ENVIRONMENT"):  # 🚀 Railway deployment
-    # Expose app for Uvicorn (Procfile will run it)
+    # Expose app for Uvicorn (Procfile will run it) without binding Gradio server
     app = iface.queue().launch(
-        server_name="0.0.0.0",
-        server_port=int(os.environ.get("PORT", 7860)),
         inline=False,
         share=False,
         prevent_thread_lock=True
