@@ -160,7 +160,7 @@ iface = gr.Interface(
 # -------------------------------
 app = iface.queue().launch(
     server_name="0.0.0.0",
-    server_port=int(os.environ.get("PORT", 8000)),
+    server_port=int(os.environ.get("PORT", 7860)),
     share=False,
     inline=False,
     prevent_thread_lock=True  # ✅ important: return app instead of blocking
