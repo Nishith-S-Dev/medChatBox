@@ -156,12 +156,16 @@ iface = gr.Interface(
 )
 
 # -------------------------------
-# Expose Gradio app for Railway
+# Local vs Railway distinction
 # -------------------------------
-app = iface.queue().launch(
-    server_name="0.0.0.0",
-    server_port=int(os.environ.get("PORT", 7860)),
-    share=False,
-    inline=False,
-    prevent_thread_lock=True  # ✅ important: return app instead of blocking
-)
+if os.environ.get("RAILWAY_ENVIRONMENT"):  # 🚀 Railway deployment
+    # Expose app for Uvicorn (Procfile will run it)
+    app = iface.queue().launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860)),
+        inline=False,
+        share=False,
+        prevent_thread_lock=True
+    )
+else:  # 💻 Local development
+    iface.launch(debug=True)
