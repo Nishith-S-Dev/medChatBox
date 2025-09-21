@@ -159,13 +159,7 @@ iface = gr.Interface(
 # Local vs Railway distinction
 # -------------------------------
 if os.environ.get("RAILWAY_ENVIRONMENT"):  # 🚀 Railway deployment
-    # Return only the ASGI app object, don’t start a Gradio server
-    app = iface.queue().launch(
-        inline=False,
-        share=False,
-        prevent_thread_lock=True,
-        inbrowser=False,
-        show_api=False
-    ).app
+    # ✅ Directly expose ASGI app
+    app = iface.app
 else:  # 💻 Local development
     iface.launch(debug=True)
