@@ -155,4 +155,13 @@ iface = gr.Interface(
     description="1. Speak about your symptoms in any language.\n2. Upload a medical image.\n3. Click Submit.\nDoctor will reply in your own language."
 )
 
-iface.queue().launch(debug=True)
+# -------------------------------
+# Expose Gradio app for Railway
+# -------------------------------
+app = iface.queue().launch(
+    server_name="0.0.0.0",
+    server_port=int(os.environ.get("PORT", 8000)),
+    share=False,
+    inline=False,
+    prevent_thread_lock=True  # ✅ important: return app instead of blocking
+)
